@@ -1,7 +1,6 @@
 export const profile = {
   greeting: "hey, I'm",
-  tagline:
-    "Full-stack engineer building AI products, authentication systems, and developer tools.",
+  tagline: "building AI products · authentication systems · developer tools",
   bio: {
     before:
       "BTech CSE undergrad, but most of my real learning happens at 2 a.m. on side projects. I work end-to-end — APIs, Postgres, queues, auth — and I'm ",
