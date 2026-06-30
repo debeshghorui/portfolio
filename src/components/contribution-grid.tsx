@@ -24,8 +24,27 @@ const cells: number[] = Array.from({ length: WEEKS * DAYS }, (_, i) => {
   return 4;
 });
 
-const LEVEL_BG = ["bg-grid-0", "bg-grid-1", "bg-grid-2", "bg-grid-3", "bg-grid-4"];
-const MONTHS = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+const LEVEL_BG = [
+  "bg-grid-0",
+  "bg-grid-1",
+  "bg-grid-2",
+  "bg-grid-3",
+  "bg-grid-4",
+];
+const MONTHS = [
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+];
 
 export function ContributionGrid() {
   return (
@@ -37,7 +56,9 @@ export function ContributionGrid() {
       </div>
       <div
         className="grid w-full gap-[3px]"
-        style={{ gridTemplateColumns: `repeat(${WEEKS}, minmax(0, 1fr))` }}
+        style={{
+          gridTemplateColumns: `repeat(${WEEKS}, minmax(0, 1fr))`,
+        }}
       >
         {Array.from({ length: WEEKS }).map((_, w) => (
           <div key={w} className="grid grid-rows-7 gap-[3px]">
