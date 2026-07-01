@@ -15,5 +15,5 @@ export type HeroBadgeIcon = "github" | "map-pin" | "graduation-cap";
 export const heroBadges: { icon: HeroBadgeIcon; text: string }[] = [
   { icon: "github", text: "open-source · in public" },
   { icon: "map-pin", text: "India" },
-  { icon: "graduation-cap", text: "CSE undergrad, batch of '27" },
+  { icon: "graduation-cap", text: "CSE undergrad, batch of '29" },
 ];

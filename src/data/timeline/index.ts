@@ -1,23 +1,23 @@
 export const timeline = [
   {
-    when: "2023 — Present",
-    title: "BTech, Computer Science & Engineering",
-    place: "Undergraduate",
+    when: "2026",
+    title: "Generative AI Cohort",
+    place: "ChaiCode",
     detail:
-      "Studying systems, algorithms, and distributed computing. Spending most weekends on side projects that don't ship.",
+      "Exploring LLMs, RAG, embeddings, vector databases, and AI application development.",
   },
   {
-    when: "2025",
-    title: "Open-source contributor",
-    place: "Various repos",
+    when: "2026",
+    title: "Mobile Development Cohort",
+    place: "ChaiCode",
     detail:
-      "Small but real PRs to TypeScript tooling and React component libraries. Bugs are great teachers.",
+      "Building cross-platform mobile apps with React Native, Expo, and modern mobile development practices.",
   },
   {
-    when: "2024",
-    title: "Freelance — web work",
-    place: "Remote",
+    when: "2026",
+    title: "Web Development Cohort",
+    place: "ChaiCode",
     detail:
-      "Built marketing sites and lightweight dashboards for early-stage founders. Learned to ship fast and listen harder.",
+      "Mastering modern full-stack web development, backend systems, authentication, databases, and deployment.",
   },
 ] as const;

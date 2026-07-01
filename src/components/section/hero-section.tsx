@@ -6,7 +6,7 @@ import {
   MapPin,
   GraduationCap,
 } from "lucide-react";
-import avatar from "@/assets/avatar.png";
+import avatar from "@/assets/image.webp";
 import {
   heroBadges,
   profile,

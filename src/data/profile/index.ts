@@ -1,11 +1,11 @@
 export const profile = {
   greeting: "hey, I'm",
-  tagline: "building AI products · authentication systems · developer tools",
+  tagline: "building products · learning systems · shipping code",
   bio: {
     before:
-      "BTech CSE undergrad, but most of my real learning happens at 2 a.m. on side projects. I work end-to-end — APIs, Postgres, queues, auth — and I'm ",
-    highlight: "obsessed with shipping real backends",
+      "I enjoy building software end-to-end—from frontend interfaces to backend systems, APIs, databases, and AI applications. My goal is ",
+    highlight: "shipping real products",
     after:
-      " for AI products and developer tools. Lately that means writing my own OIDC server, getting cozy with distributed systems papers, and turning half-baked ideas into things people can actually use.",
+      " that solve problems while helping me become a better engineer every day.",
   },
 } as const;

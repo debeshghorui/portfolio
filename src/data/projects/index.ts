@@ -2,35 +2,35 @@ import { links } from "../links";
 
 export const projects = [
   {
-    name: "Pulse",
-    tag: "Realtime",
+    name: "OIDC Server",
+    tag: "Alpha • v0.6.0",
     description:
-      "A tiny realtime dashboard for tracking study streaks and side-project momentum. WebSockets, Postgres, and a stupid amount of polish.",
-    href: links.github,
-    stack: ["Next.js", "Supabase", "Tailwind"],
+      "A production-focused OpenID Connect and OAuth 2.0 server built for my own projects. Supports JWT, JWKS, PKCE, RBAC, and secure authentication workflows with SDKs planned.",
+    href: "https://github.com/debeshghorui/OIDC-Server",
+    stack: ["Node.js", "TypeScript", "PostgreSQL"],
   },
   {
-    name: "ChaiCompiler",
-    tag: "Tooling",
+    name: "Code Argus AI",
+    tag: "Alpha",
     description:
-      "A toy compiler that turns a tiny ML-ish language into WebAssembly. Built to actually understand parsers, ASTs, and codegen.",
-    href: links.github,
-    stack: ["Rust", "WASM", "Pratt parser"],
+      "An AI-powered pull request review platform that analyzes code changes, suggests improvements, and helps developers catch issues before merging.",
+    href: "https://github.com/debeshghorui/codeargus",
+    stack: ["Next.js", "OpenAI", "TypeScript"],
   },
   {
-    name: "Notesync",
-    tag: "Productivity",
+    name: "ShipFlow AI",
+    tag: "Hackathon",
     description:
-      "End-to-end encrypted markdown notes that sync across devices over CRDTs. My excuse to learn Yjs and conflict-free editing.",
+      "An AI-powered platform that transforms product ideas into structured development plans, PRDs, and implementation workflows for faster software delivery.",
     href: links.github,
-    stack: ["React", "Yjs", "Cloudflare"],
+    stack: ["Next.js", "Node.js", "AI"],
   },
   {
-    name: "campusbot",
-    tag: "AI",
+    name: "ChaiTailwind",
+    tag: "v1.0.0",
     description:
-      "A RAG-based chatbot that answers questions from my college's handbook PDFs. Local LLM, vector store, ~300 lines of glue.",
-    href: links.github,
-    stack: ["Python", "FAISS", "Ollama"],
+      "A lightweight utility-first CSS framework built from scratch to explore compiler design, utility generation, and modern styling workflows.",
+    href: "https://github.com/debeshghorui/chaitailwind",
+    stack: ["TypeScript", "Node.js", "CSS"],
   },
 ] as const;

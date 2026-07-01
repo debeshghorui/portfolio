@@ -16,7 +16,9 @@ export function ThemeToggle() {
     document.documentElement.classList.toggle("dark", next);
     try {
       localStorage.setItem("theme", next ? "dark" : "light");
-    } catch {}
+    } catch {
+      // localStorage unavailable (e.g. private browsing)
+    }
   };
 
   const label = mounted
