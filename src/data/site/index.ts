@@ -1,4 +1,5 @@
 export const site = {
+  url: "https://debeshghorui.dev",
   name: "Debesh Ghorui",
   nameShort: "debesh ghorui",
   handle: "@DebeshGhorui",

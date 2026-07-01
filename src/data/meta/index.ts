@@ -1,14 +1,18 @@
 import { site } from "../site";
 
 export const meta = {
-  title: "Debesh Ghorui — BTech CSE student, builder, tinkerer",
+  title: "Debesh Ghorui — AI & Backend Engineer | BTech CSE Student",
+
   description:
-    "Personal site of Debesh Ghorui — BTech CSE student building side projects, learning systems, and shipping ideas on the web.",
-  ogTitle: site.name,
+    "Personal portfolio of Debesh Ghorui, a BTech Computer Science student building AI applications, authentication systems, backend infrastructure, and developer tools.",
+
+  ogTitle: "Debesh Ghorui — AI & Backend Engineer",
+
   ogDescription:
-    "BTech CSE student. Building, breaking, and learning in public. Projects, notes, and signals.",
+    "Building AI applications, authentication systems, backend infrastructure, and developer tools.",
+
   rootDescription:
-    "Personal site of Debesh Ghorui — BTech Computer Science student building side projects, learning systems, and shipping ideas.",
-  rootOgDescription:
-    "BTech CSE student building things on the web. Projects, notes, and signals.",
+    "Personal portfolio of Debesh Ghorui showcasing projects, technical writing, and my journey in AI, backend engineering, and developer tools.",
+
+  rootOgDescription: "AI builder • Backend engineer • Developer tools.",
 } as const;
