@@ -12,7 +12,7 @@ import { type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { ThemeToggle } from "../components/theme-toggle";
 import { WebMcp } from "../components/webmcp";
-import { meta, navLinks, site } from "@/data";
+import { meta, navLinks, site, socials } from "@/data";
 
 function NotFoundComponent() {
   return (
@@ -96,13 +96,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { title: meta.title },
         { name: "description", content: meta.rootDescription },
         { name: "author", content: site.name },
+        { name: "is-agentic-site-type", content: "content" },
         { property: "og:title", content: meta.ogTitle },
         { property: "og:description", content: meta.rootOgDescription },
         { property: "og:type", content: "website" },
+        { property: "og:url", content: site.url },
+        { property: "og:image", content: `${site.url}/favicon.png` },
         { name: "twitter:card", content: "summary" },
         { name: "twitter:site", content: site.handle },
       ],
       links: [
+        { rel: "canonical", href: site.url },
         { rel: "stylesheet", href: appCss },
         { rel: "icon", type: "image/png", href: "/favicon.png" },
         {
@@ -123,7 +127,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap",
         },
       ],
-      scripts: [{ children: themeInitScript }],
+      scripts: [
+        { children: themeInitScript },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: site.name,
+            url: site.url,
+            email: site.email,
+            image: `${site.url}/favicon.png`,
+            description: meta.description,
+            jobTitle: "AI and backend engineer",
+            address: {
+              "@type": "PostalAddress",
+              addressCountry: "IN",
+            },
+            sameAs: socials
+              .map((social) => social.href)
+              .filter((href) => href.startsWith("http")),
+          }),
+        },
+      ],
     }),
     shellComponent: RootShell,
     component: RootComponent,
@@ -186,7 +212,30 @@ function RootComponent() {
       <Nav />
       <Outlet />
       <footer className="mx-auto mt-24 max-w-3xl px-6 pb-12">
-        <div className="border-t border-border/60 pt-6 font-mono-tight text-xs text-muted-foreground flex flex-wrap items-center justify-between gap-2">
+        <nav
+          aria-label="Site"
+          className="flex flex-wrap gap-x-4 gap-y-2 border-t border-border/60 pt-6 font-mono-tight text-xs text-muted-foreground"
+        >
+          <a href="/about" className="hover:text-foreground">
+            about
+          </a>
+          <a href="/contact" className="hover:text-foreground">
+            contact
+          </a>
+          <a href="/privacy" className="hover:text-foreground">
+            privacy
+          </a>
+          <a href="/developers" className="hover:text-foreground">
+            api
+          </a>
+          <a href="/openapi.json" className="hover:text-foreground">
+            openapi
+          </a>
+          <a href="/llms.txt" className="hover:text-foreground">
+            llms.txt
+          </a>
+        </nav>
+        <div className="pt-4 font-mono-tight text-xs text-muted-foreground flex flex-wrap items-center justify-between gap-2">
           <span>
             © {new Date().getFullYear()} {site.nameShort}
           </span>

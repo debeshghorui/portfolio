@@ -28,6 +28,32 @@ export function optionsResponse(): Response {
   return new Response(null, { status: 204, headers: corsHeaders });
 }
 
+export function problemResponse(
+  status: number,
+  code: string,
+  title: string,
+  detail: string,
+  resolution: string,
+): Response {
+  const body = {
+    type: "about:blank",
+    title,
+    status,
+    detail,
+    code,
+    resolution,
+  };
+
+  return new Response(`${JSON.stringify(body, null, 2)}\n`, {
+    status,
+    headers: {
+      "Content-Type": "application/problem+json",
+      "Cache-Control": "no-store",
+      ...corsHeaders,
+    },
+  });
+}
+
 export function asHead(request: Request, response: Response): Response {
   if (request.method !== "HEAD") return response;
   return new Response(null, {

@@ -1,7 +1,14 @@
 import { aiCatalogDocument } from "./ard";
 import { apiCatalogDocument } from "./api-catalog";
 import { healthPayload, openApiDocument, portfolioPayload } from "./api";
-import { agentJson, agentResponse, asHead, markdownTokens, optionsResponse } from "./http";
+import {
+  agentJson,
+  agentResponse,
+  asHead,
+  markdownTokens,
+  optionsResponse,
+  problemResponse,
+} from "./http";
 import { renderLlmsTxt } from "./llms";
 import { renderHomeMarkdown } from "./markdown";
 import { renderSkillMarkdown, skillName, skillsIndexDocument } from "./skills";
@@ -92,12 +99,41 @@ async function responseFor(path: string): Promise<Response | null> {
   }
 }
 
+function isApiPath(path: string): boolean {
+  return path === "/openapi.json" || path.startsWith("/api/");
+}
+
+function methodNotAllowed(path: string): Response {
+  return problemResponse(
+    405,
+    "method_not_allowed",
+    "Method not allowed",
+    `${path} accepts GET and HEAD only.`,
+    "Retry with GET. This portfolio API is read-only and has no request body.",
+  );
+}
+
+function apiNotFound(path: string): Response {
+  return problemResponse(
+    404,
+    "api_route_not_found",
+    "API route not found",
+    `${path} is not a portfolio API route.`,
+    "Use GET /openapi.json or GET /.well-known/api-catalog to find /api/portfolio.json and /api/health.",
+  );
+}
+
 export async function handleAgentRequest(request: Request): Promise<Response | null> {
   const url = new URL(request.url);
   const path = normalizePath(url.pathname);
   const method = request.method.toUpperCase();
 
-  if (method === "OPTIONS" && AGENT_PATHS.has(path)) {
+  if (isApiPath(path) && method !== "GET" && method !== "HEAD" && method !== "OPTIONS") {
+    return methodNotAllowed(path);
+  }
+
+  if (method === "OPTIONS" && (AGENT_PATHS.has(path) || path.startsWith("/api/"))) {
+    if (!AGENT_PATHS.has(path)) return apiNotFound(path);
     return optionsResponse();
   }
 
@@ -108,7 +144,10 @@ export async function handleAgentRequest(request: Request): Promise<Response | n
   }
 
   const response = await responseFor(path);
-  if (!response) return null;
+  if (!response) {
+    if (path.startsWith("/api/")) return apiNotFound(path);
+    return null;
+  }
   return asHead(request, response);
 }
 

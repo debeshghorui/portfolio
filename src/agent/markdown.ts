@@ -64,5 +64,12 @@ ${sections.contact.subtitle}
 ${contact.introBeforeX} ${contact.xLinkText} ${contact.introBetween} ${contact.emailLinkText}${contact.introAfter}
 
 ${socials.map((social) => `- ${social.label}: ${social.href}`).join("\n")}
+
+## Pages
+
+- About: ${site.url}/about
+- Contact: ${site.url}/contact
+- Privacy: ${site.url}/privacy
+- API notes: ${site.url}/developers
 `;
 }
