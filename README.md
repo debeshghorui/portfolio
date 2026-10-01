@@ -77,7 +77,7 @@ Routes are files. `src/routes/__root.tsx` is the shell around every page. `src/r
 
 ## For agents
 
-The site is public and read-only. Errors under the API use `application/problem+json` with a stable `code` and a `resolution`. Unknown API paths return 404. Anything other than `GET` or `HEAD` returns 405.
+The site is public and read-only. Errors under the API and under `/.well-known` use `application/problem+json` with a stable `code` and a `resolution`. Unknown API paths and unknown `/.well-known` paths return 404. Anything other than `GET` or `HEAD` on a known route returns 405.
 
 | Method | Path | Returns |
 | --- | --- | --- |

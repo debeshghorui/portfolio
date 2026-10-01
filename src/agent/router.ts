@@ -103,6 +103,10 @@ function isApiPath(path: string): boolean {
   return path === "/openapi.json" || path.startsWith("/api/");
 }
 
+function isWellKnownPath(path: string): boolean {
+  return path === "/.well-known" || path.startsWith("/.well-known/");
+}
+
 function methodNotAllowed(path: string): Response {
   return problemResponse(
     405,
@@ -123,17 +127,39 @@ function apiNotFound(path: string): Response {
   );
 }
 
+function wellKnownNotFound(path: string): Response {
+  return problemResponse(
+    404,
+    "well_known_not_found",
+    "Discovery document not found",
+    `${path} is not a discovery document on this site.`,
+    "Use GET /.well-known/api-catalog, GET /.well-known/ai-catalog.json, or GET /.well-known/agent-skills/index.json.",
+  );
+}
+
 export async function handleAgentRequest(request: Request): Promise<Response | null> {
   const url = new URL(request.url);
   const path = normalizePath(url.pathname);
   const method = request.method.toUpperCase();
 
-  if (isApiPath(path) && method !== "GET" && method !== "HEAD" && method !== "OPTIONS") {
+  const wellKnown = isWellKnownPath(path);
+  const knownAgentPath = AGENT_PATHS.has(path);
+
+  if (
+    (isApiPath(path) || (wellKnown && knownAgentPath)) &&
+    method !== "GET" &&
+    method !== "HEAD" &&
+    method !== "OPTIONS"
+  ) {
     return methodNotAllowed(path);
   }
 
-  if (method === "OPTIONS" && (AGENT_PATHS.has(path) || path.startsWith("/api/"))) {
-    if (!AGENT_PATHS.has(path)) return apiNotFound(path);
+  if (wellKnown && !knownAgentPath && method !== "GET" && method !== "HEAD") {
+    return wellKnownNotFound(path);
+  }
+
+  if (method === "OPTIONS" && (knownAgentPath || path.startsWith("/api/"))) {
+    if (!knownAgentPath) return apiNotFound(path);
     return optionsResponse();
   }
 
@@ -146,6 +172,7 @@ export async function handleAgentRequest(request: Request): Promise<Response | n
   const response = await responseFor(path);
   if (!response) {
     if (path.startsWith("/api/")) return apiNotFound(path);
+    if (wellKnown) return asHead(request, wellKnownNotFound(path));
     return null;
   }
   return asHead(request, response);
