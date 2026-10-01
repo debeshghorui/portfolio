@@ -1,5 +1,6 @@
 import { Github, Mail } from "lucide-react";
 import { Section } from "@/components/section/section";
+import { LinkPreview } from "@/components/ui/link-preview";
 import { contact, links, sections, site } from "@/data";
 
 export function ContactSection() {
@@ -12,15 +13,15 @@ export function ContactSection() {
       <div className="rounded-lg border border-border bg-card p-5 sm:p-6">
         <p className="text-base text-foreground">
           {contact.introBeforeX}{" "}
-          <a
-            href={links.x}
+          <LinkPreview
+            url={links.x}
             target="_blank"
             rel="noreferrer"
             aria-label={`DM ${site.name} on X (opens in new tab)`}
             className="accent-link font-medium rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
           >
             {contact.xLinkText}
-          </a>{" "}
+          </LinkPreview>{" "}
           {contact.introBetween}{" "}
           <a
             href={links.email}
@@ -37,8 +38,8 @@ export function ContactSection() {
           >
             <Mail className="h-3.5 w-3.5" aria-hidden="true" /> {site.email}
           </a>
-          <a
-            href={links.github}
+          <LinkPreview
+            url={links.github}
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub profile (opens in new tab)"
@@ -46,7 +47,7 @@ export function ContactSection() {
           >
             <Github className="h-3.5 w-3.5" aria-hidden="true" />{" "}
             {contact.githubButtonLabel}
-          </a>
+          </LinkPreview>
         </div>
       </div>
     </Section>

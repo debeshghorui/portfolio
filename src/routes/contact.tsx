@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { TextPage } from "@/components/text-page";
+import { LinkPreview } from "@/components/ui/link-preview";
 import { contact, sections, site, socials } from "@/data";
 
 export const Route = createFileRoute("/contact")({
@@ -39,9 +40,15 @@ function ContactPage() {
         {socials.map((social) => (
           <li key={social.label}>
             {social.label}:{" "}
-            <a href={social.href} className="accent-link">
-              {social.href.replace("mailto:", "")}
-            </a>
+            {social.href.startsWith("mailto:") ? (
+              <a href={social.href} className="accent-link">
+                {social.href.replace("mailto:", "")}
+              </a>
+            ) : (
+              <LinkPreview url={social.href} className="accent-link">
+                {social.href}
+              </LinkPreview>
+            )}
           </li>
         ))}
       </ul>

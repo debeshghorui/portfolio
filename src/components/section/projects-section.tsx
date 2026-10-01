@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/section/section";
+import { LinkPreview } from "@/components/ui/link-preview";
 import { projects, sections } from "@/data";
 
 export function ProjectsSection() {
@@ -11,9 +12,9 @@ export function ProjectsSection() {
     >
       <div className="grid gap-3 sm:grid-cols-2">
         {projects.map((p) => (
-          <a
+          <LinkPreview
             key={p.name}
-            href={p.href}
+            url={p.href}
             target="_blank"
             rel="noreferrer"
             aria-label={`${p.name} — ${p.tag} project (opens in new tab)`}
@@ -39,7 +40,7 @@ export function ProjectsSection() {
             <div className="mt-1 font-mono-tight text-[11px] text-muted-foreground">
               {p.stack.join(" · ")}
             </div>
-          </a>
+          </LinkPreview>
         ))}
       </div>
     </Section>

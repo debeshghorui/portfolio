@@ -7,6 +7,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 import avatar from "@/assets/image.webp";
+import { LinkPreview } from "@/components/ui/link-preview";
 import {
   heroBadges,
   profile,
@@ -91,21 +92,27 @@ export function HeroSection() {
       >
         {socials.map(({ href, label, icon }) => {
           const Icon = socialIcons[icon];
+          const className = `inline-flex h-11 w-11 sm:h-10 sm:w-10 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-accent hover:text-accent ${FOCUS}`;
+          const iconEl = (
+            <Icon className="h-4 w-4" aria-hidden="true" focusable="false" />
+          );
           return (
             <li key={label}>
-              <a
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${label} (opens in new tab)`}
-                className={`inline-flex h-11 w-11 sm:h-10 sm:w-10 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-accent hover:text-accent ${FOCUS}`}
-              >
-                <Icon
-                  className="h-4 w-4"
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              </a>
+              {href.startsWith("mailto:") ? (
+                <a href={href} aria-label={label} className={className}>
+                  {iconEl}
+                </a>
+              ) : (
+                <LinkPreview
+                  url={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${label} (opens in new tab)`}
+                  className={className}
+                >
+                  {iconEl}
+                </LinkPreview>
+              )}
             </li>
           );
         })}
