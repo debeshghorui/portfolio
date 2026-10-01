@@ -25,7 +25,23 @@ export default defineConfig({
   plugins: [
     tsConfigPaths({ projects: ["./tsconfig.json"] }),
     tanstackStart(),
-    nitro({ defaultPreset: "cloudflare-module" }),
+    nitro({
+      defaultPreset: "cloudflare-module",
+      cloudflare: {
+        wrangler: {
+          observability: {
+            enabled: true,
+            logs: {
+              enabled: true,
+              invocation_logs: true,
+            },
+            traces: {
+              enabled: true,
+            },
+          },
+        },
+      },
+    }),
     viteReact(),
     tailwindcss(),
   ],
