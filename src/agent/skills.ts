@@ -3,7 +3,7 @@ import { meta, site } from "@/data";
 export const skillName = "debesh-portfolio";
 
 export const skillDescription =
-  "Read Debesh Ghorui's public portfolio: profile, projects, stack, timeline, and contact details.";
+  "Read Debesh Ghorui's public portfolio: profile, projects, writing, stack, timeline, and contact details.";
 
 export function renderSkillMarkdown(): string {
   return `---
@@ -29,7 +29,7 @@ Use the read-only endpoints below. Do not invent projects, employers, or contact
 ## When to use
 
 - Someone asks who ${site.name} is, what he builds, or how to reach him.
-- Someone wants project names, the tech stack, or what he is studying now.
+- Someone wants project names, essays, the tech stack, or what he is studying now.
 - Prefer \`/api/portfolio.json\` for structured answers and \`/index.md\` when a prose summary is enough.
 `;
 }

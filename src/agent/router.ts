@@ -47,7 +47,9 @@ function wantsMarkdown(accept: string | null): boolean {
 
   const ranges = accept.split(",").map((part) => {
     const [type = "", ...params] = part.trim().split(";");
-    const qParam = params.map((param) => param.trim()).find((param) => param.startsWith("q="));
+    const qParam = params
+      .map((param) => param.trim())
+      .find((param) => param.startsWith("q="));
     const q = qParam ? Number(qParam.slice(2)) : 1;
     return {
       type: type.trim().toLowerCase(),
@@ -82,7 +84,10 @@ async function responseFor(path: string): Promise<Response | null> {
     case "/.well-known/agent-skills/index.json":
       return agentJson(await skillsIndexDocument());
     case `/.well-known/agent-skills/${skillName}/SKILL.md`:
-      return agentResponse(renderSkillMarkdown(), "text/markdown; charset=utf-8");
+      return agentResponse(
+        renderSkillMarkdown(),
+        "text/markdown; charset=utf-8",
+      );
     case "/llms.txt":
       return agentResponse(renderLlmsTxt(), "text/plain; charset=utf-8");
     case "/llms-full.txt":
@@ -123,16 +128,26 @@ function apiNotFound(path: string): Response {
   );
 }
 
-export async function handleAgentRequest(request: Request): Promise<Response | null> {
+export async function handleAgentRequest(
+  request: Request,
+): Promise<Response | null> {
   const url = new URL(request.url);
   const path = normalizePath(url.pathname);
   const method = request.method.toUpperCase();
 
-  if (isApiPath(path) && method !== "GET" && method !== "HEAD" && method !== "OPTIONS") {
+  if (
+    isApiPath(path) &&
+    method !== "GET" &&
+    method !== "HEAD" &&
+    method !== "OPTIONS"
+  ) {
     return methodNotAllowed(path);
   }
 
-  if (method === "OPTIONS" && (AGENT_PATHS.has(path) || path.startsWith("/api/"))) {
+  if (
+    method === "OPTIONS" &&
+    (AGENT_PATHS.has(path) || path.startsWith("/api/"))
+  ) {
     if (!AGENT_PATHS.has(path)) return apiNotFound(path);
     return optionsResponse();
   }
@@ -151,7 +166,10 @@ export async function handleAgentRequest(request: Request): Promise<Response | n
   return asHead(request, response);
 }
 
-export function withHomepageAgentHeaders(request: Request, response: Response): Response {
+export function withHomepageAgentHeaders(
+  request: Request,
+  response: Response,
+): Response {
   const url = new URL(request.url);
   if (normalizePath(url.pathname) !== "/") return response;
 
@@ -160,12 +178,17 @@ export function withHomepageAgentHeaders(request: Request, response: Response): 
 
   const headers = new Headers(response.headers);
   const existingLink = headers.get("link");
-  headers.set("link", existingLink ? `${existingLink}, ${AGENT_LINKS}` : AGENT_LINKS);
+  headers.set(
+    "link",
+    existingLink ? `${existingLink}, ${AGENT_LINKS}` : AGENT_LINKS,
+  );
 
   const vary = headers.get("vary");
-  const varyTokens = vary?.split(",").map((token) => token.trim().toLowerCase()) ?? [];
+  const varyTokens =
+    vary?.split(",").map((token) => token.trim().toLowerCase()) ?? [];
   if (!vary) headers.set("vary", "Accept");
-  else if (!varyTokens.includes("accept")) headers.set("vary", `${vary}, Accept`);
+  else if (!varyTokens.includes("accept"))
+    headers.set("vary", `${vary}, Accept`);
 
   return new Response(response.body, {
     status: response.status,

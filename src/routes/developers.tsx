@@ -21,18 +21,22 @@ export const Route = createFileRoute("/developers")({
 
 function DevelopersPage() {
   return (
-    <TextPage title="API">
+    <TextPage
+      title="API"
+      subtitle="A read-only HTTP API for this portfolio. No key, no writes."
+    >
       <p>
-        This portfolio publishes a small read-only HTTP API so an agent can quote the page without
-        scraping HTML. There is no API key, no write operation, and no sandbox account. Every
-        documented route is a public GET.
+        This portfolio publishes a small read-only HTTP API so an agent can
+        quote the page without scraping HTML. There is no API key, no write
+        operation, and no sandbox account. Every documented route is a public
+        GET.
       </p>
       <ul className="list-disc space-y-2 pl-5">
         <li>
           <a href="/api/portfolio.json" className="accent-link">
             GET /api/portfolio.json
           </a>{" "}
-          returns name, bio, projects, stack, timeline, and contact.
+          returns name, bio, projects, writing, stack, timeline, and contact.
         </li>
         <li>
           <a href="/api/health" className="accent-link">
@@ -44,7 +48,8 @@ function DevelopersPage() {
           <a href="/openapi.json" className="accent-link">
             GET /openapi.json
           </a>{" "}
-          is the OpenAPI description, with an operationId and a typed schema on each operation.
+          is the OpenAPI description, with an operationId and a typed schema on
+          each operation.
         </li>
         <li>
           <a href="/llms.txt" className="accent-link">
@@ -56,8 +61,8 @@ function DevelopersPage() {
           <a href="/index.md" className="accent-link">
             GET /index.md
           </a>{" "}
-          is the homepage as Markdown. Sending Accept: text/markdown to the homepage returns the
-          same body.
+          is the homepage as Markdown. Sending Accept: text/markdown to the
+          homepage returns the same body.
         </li>
       </ul>
       <p>A working request:</p>
@@ -65,9 +70,10 @@ function DevelopersPage() {
         {`curl ${site.url}/api/portfolio.json`}
       </pre>
       <p>
-        Errors use application/problem+json with a code, a detail, and a resolution. An unknown path
-        under /api returns 404. A method other than GET or HEAD returns 405. The API is public and
-        does not issue rate-limit quotas.
+        Errors use application/problem+json with a code, a detail, and a
+        resolution. An unknown path under /api returns 404. A method other than
+        GET or HEAD returns 405. The API is public and does not issue rate-limit
+        quotas.
       </p>
     </TextPage>
   );

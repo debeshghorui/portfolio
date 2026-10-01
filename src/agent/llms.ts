@@ -17,6 +17,9 @@ export function renderLlmsTxt(): string {
 - [OpenAPI](${site.url}/openapi.json): description of the read-only portfolio API
 - [API catalog](${site.url}/.well-known/api-catalog): RFC 9727 linkset for that API
 - [API notes](${site.url}/developers): how to call the read-only API
+- [Projects](${site.url}/projects): every public project, with a page per project
+- [Writing](${site.url}/writing): essays on EasyTech Bytes
+- [Study](${site.url}/credentials): college and course certificates
 - [About](${site.url}/about): who ${site.name} is
 - [Contact](${site.url}/contact): email and social profiles
 - [Privacy](${site.url}/privacy): what this site stores

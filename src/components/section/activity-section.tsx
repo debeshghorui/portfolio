@@ -8,7 +8,7 @@ export function ActivitySection() {
       title={sections.activity.title}
       subtitle={sections.activity.subtitle}
     >
-      <div className="rounded-lg border border-border bg-card p-4 sm:p-5">
+      <div className="rounded-lg border border-border bg-card p-4 sm:p-5 transition-[border-color] duration-300 ease-out-soft hover:border-accent/25">
         <ContributionGrid />
       </div>
     </Section>

@@ -20,7 +20,10 @@ export function agentResponse(
   });
 }
 
-export function agentJson(data: unknown, contentType = "application/json; charset=utf-8"): Response {
+export function agentJson(
+  data: unknown,
+  contentType = "application/json; charset=utf-8",
+): Response {
   return agentResponse(`${JSON.stringify(data, null, 2)}\n`, contentType);
 }
 

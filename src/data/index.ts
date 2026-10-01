@@ -8,9 +8,16 @@ export {
   type SocialIcon,
   type HeroBadgeIcon,
 } from "./socials";
-export { projects } from "./projects";
+export {
+  projects,
+  featuredProjects,
+  getProject,
+  projectRepoUrl,
+  type Project,
+} from "./projects";
 export { stack, stackLogoCDN } from "./stack";
-export { timeline } from "./timeline";
+export { timeline, type TimelineItem } from "./timeline";
+export { posts, writingBlog } from "./writing";
 export { sections } from "./sections";
 export { contact } from "./contact";
-export { navLinks } from "./nav";
+export { navLinks, footerLinks } from "./nav";

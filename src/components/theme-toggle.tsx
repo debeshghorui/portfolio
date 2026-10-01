@@ -36,13 +36,16 @@ export function ThemeToggle() {
       aria-label={label}
       title={label}
       aria-pressed={dark}
-      className="inline-flex h-10 w-10 sm:h-9 sm:w-9 items-center justify-center rounded-md border border-border bg-background text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border bg-background text-foreground interactive-card hover:bg-muted active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
-      {mounted && dark ? (
-        <Sun className="h-4 w-4" aria-hidden="true" />
-      ) : (
-        <Moon className="h-4 w-4" aria-hidden="true" />
-      )}
+      <Sun
+        className="theme-icon-swap h-4 w-4 hidden dark:block"
+        aria-hidden="true"
+      />
+      <Moon
+        className="theme-icon-swap h-4 w-4 dark:hidden"
+        aria-hidden="true"
+      />
     </button>
   );
 }

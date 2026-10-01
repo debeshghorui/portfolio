@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { site } from "@/data";
+import { projects, site } from "@/data";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
@@ -9,6 +9,13 @@ export const Route = createFileRoute("/sitemap.xml")({
         const lastmod = new Date().toISOString().slice(0, 10);
         const pages = [
           { path: "/", priority: "1.0" },
+          { path: "/projects", priority: "0.8" },
+          ...projects.map((project) => ({
+            path: `/projects/${project.slug}`,
+            priority: "0.7",
+          })),
+          { path: "/writing", priority: "0.7" },
+          { path: "/credentials", priority: "0.5" },
           { path: "/about", priority: "0.6" },
           { path: "/contact", priority: "0.6" },
           { path: "/privacy", priority: "0.4" },

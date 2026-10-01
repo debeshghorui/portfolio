@@ -1,4 +1,5 @@
 // Deterministic pseudo-random contribution-style grid (53 weeks × 7 days).
+// Decorative only — not live GitHub data.
 const WEEKS = 53;
 const DAYS = 7;
 
@@ -46,39 +47,65 @@ const MONTHS = [
   "Jun",
 ];
 
+// Index of the first week (0-based) at which each month starts, assuming
+// the grid begins on the first day of "Jul". Used to position month labels
+// above the correct week column instead of evenly spreading them.
+const MONTH_START_WEEK = [0, 5, 9, 13, 17, 22, 26, 30, 35, 39, 43, 48];
+
 export function ContributionGrid() {
   return (
-    <div className="w-full">
-      <div className="mb-2 flex justify-between px-1 font-mono-tight text-[10px] text-muted-foreground">
-        {MONTHS.map((m) => (
-          <span key={m}>{m}</span>
+    <div
+      className="w-full"
+      role="img"
+      aria-label="A decorative contribution-style activity grid for the last year. It is generated from seeded pseudo-random data and does not reflect live activity."
+    >
+      <div className="mb-2 relative h-3 font-mono-tight text-[10px] text-muted-foreground">
+        {MONTHS.map((m, i) => (
+          <span
+            key={m}
+            className="absolute top-0"
+            style={{
+              left: `calc((100% - ${
+                WEEKS - 1
+              }px) * ${MONTH_START_WEEK[i]} / ${WEEKS - 1} + ${MONTH_START_WEEK[i]}px)`,
+            }}
+          >
+            {m}
+          </span>
         ))}
       </div>
-      <div
-        className="grid w-full gap-[3px]"
-        style={{
-          gridTemplateColumns: `repeat(${WEEKS}, minmax(0, 1fr))`,
-        }}
-      >
-        {Array.from({ length: WEEKS }).map((_, w) => (
-          <div key={w} className="grid grid-rows-7 gap-[3px]">
-            {Array.from({ length: DAYS }).map((_, d) => {
-              const lvl = cells[w * DAYS + d];
-              return (
-                <div
-                  key={d}
-                  className={`aspect-square rounded-[2px] ${LEVEL_BG[lvl]}`}
-                  title={`level ${lvl}`}
-                />
-              );
-            })}
-          </div>
-        ))}
+      <div className="w-full overflow-x-auto pb-1">
+        <div
+          className="grid gap-[3px]"
+          style={{
+            gridTemplateColumns: `repeat(${WEEKS}, 9px)`,
+            minWidth: `${WEEKS * 12}px`,
+          }}
+        >
+          {Array.from({ length: WEEKS }).map((_, w) => (
+            <div key={w} className="grid grid-rows-7 gap-[3px]">
+              {Array.from({ length: DAYS }).map((_, d) => {
+                const lvl = cells[w * DAYS + d];
+                return (
+                  <div
+                    key={d}
+                    aria-hidden="true"
+                    className={`contribution-cell h-[9px] w-[9px] rounded-[2px] ${LEVEL_BG[lvl]}`}
+                  />
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
       <div className="mt-3 flex items-center justify-end gap-1.5 font-mono-tight text-[10px] text-muted-foreground">
         <span>less</span>
         {LEVEL_BG.map((c, i) => (
-          <div key={i} className={`h-2.5 w-2.5 rounded-[2px] ${c}`} />
+          <div
+            key={i}
+            aria-hidden="true"
+            className={`h-2.5 w-2.5 rounded-[2px] ${c}`}
+          />
         ))}
         <span>more</span>
       </div>

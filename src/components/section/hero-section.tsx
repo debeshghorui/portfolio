@@ -58,7 +58,7 @@ export function HeroSection() {
           height={96}
           fetchPriority="high"
           decoding="async"
-          className="h-20 w-20 sm:h-24 sm:w-24 shrink-0 rounded-full border border-border bg-card object-cover shadow-md ring-1 ring-accent/30"
+          className="h-20 w-20 sm:h-24 sm:w-24 shrink-0 rounded-full border border-border bg-card object-cover shadow-md ring-1 ring-accent/30 transition-[box-shadow,transform] duration-300 ease-out-soft motion-safe:hover:scale-[1.02] motion-safe:hover:ring-accent/50"
         />
         <div className="flex min-w-0 flex-col">
           <span className="font-mono-tight text-xs text-muted-foreground">
@@ -66,7 +66,7 @@ export function HeroSection() {
           </span>
           <h1
             id="hero-name"
-            className="truncate text-2xl sm:text-4xl font-semibold tracking-tight text-foreground"
+            className="text-balance text-2xl sm:text-4xl font-semibold tracking-tight text-foreground"
           >
             {site.name}
           </h1>
@@ -91,14 +91,18 @@ export function HeroSection() {
       >
         {socials.map(({ href, label, icon }) => {
           const Icon = socialIcons[icon];
+          const isMail = href.startsWith("mailto:");
+          const externalProps = isMail
+            ? {}
+            : { target: "_blank", rel: "noreferrer" };
+          const ariaLabel = isMail ? label : `${label} (opens in new tab)`;
           return (
             <li key={label}>
               <a
                 href={href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${label} (opens in new tab)`}
-                className={`inline-flex h-11 w-11 sm:h-10 sm:w-10 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-accent hover:text-accent ${FOCUS}`}
+                aria-label={ariaLabel}
+                className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border bg-card text-muted-foreground interactive-card interactive-lift hover:border-accent hover:text-accent active:scale-95 ${FOCUS}`}
+                {...externalProps}
               >
                 <Icon
                   className="h-4 w-4"

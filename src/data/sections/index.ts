@@ -18,6 +18,11 @@ export const sections = {
     title: "Currently",
     subtitle: "What I'm spending my hours on.",
   },
+  writing: {
+    id: "writing",
+    title: "Writing",
+    subtitle: "Notes from EasyTech Bytes. The full post lives on the blog.",
+  },
   contact: {
     id: "contact",
     title: "Say hi",

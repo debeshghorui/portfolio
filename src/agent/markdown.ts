@@ -1,13 +1,16 @@
 import {
   contact,
   heroBadges,
+  posts,
   profile,
+  projectRepoUrl,
   projects,
   sections,
   site,
   socials,
   stack,
   timeline,
+  writingBlog,
 } from "@/data";
 
 export function portfolioBio(): string {
@@ -16,11 +19,17 @@ export function portfolioBio(): string {
 
 export function renderHomeMarkdown(): string {
   const projectBlocks = projects
-    .map(
-      (project) =>
-        `### ${project.name}\n\n${project.tag}\n\n${project.description}\n\nStack: ${project.stack.join(", ")}\n\n${project.href}`,
-    )
+    .filter((project) => project.featured)
+    .map((project) => {
+      const repo = projectRepoUrl(project);
+      return `### ${project.name}\n\n${project.tag}\n\n${project.description}\n\nStack: ${project.stack.join(", ")}\n\n${site.url}/projects/${project.slug}${repo ? `\n\n${repo}` : ""}`;
+    })
     .join("\n\n");
+
+  const writingBlocks = posts
+    .slice(0, 3)
+    .map((post) => `- ${post.date}: [${post.title}](${post.href})`)
+    .join("\n");
 
   const timelineBlocks = timeline
     .map(
@@ -45,6 +54,8 @@ ${sections.projects.subtitle}
 
 ${projectBlocks}
 
+Full list: ${site.url}/projects
+
 ## ${sections.stack.title}
 
 ${sections.stack.subtitle}
@@ -57,6 +68,18 @@ ${sections.timeline.subtitle}
 
 ${timelineBlocks}
 
+Study: ${site.url}/credentials
+
+## ${sections.writing.title}
+
+${sections.writing.subtitle}
+
+${writingBlog.name}: ${writingBlog.href}
+
+${writingBlocks}
+
+All writing: ${site.url}/writing
+
 ## ${sections.contact.title}
 
 ${sections.contact.subtitle}
@@ -67,6 +90,9 @@ ${socials.map((social) => `- ${social.label}: ${social.href}`).join("\n")}
 
 ## Pages
 
+- Projects: ${site.url}/projects
+- Writing: ${site.url}/writing
+- Study: ${site.url}/credentials
 - About: ${site.url}/about
 - Contact: ${site.url}/contact
 - Privacy: ${site.url}/privacy

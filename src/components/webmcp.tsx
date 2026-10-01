@@ -3,13 +3,16 @@ import { useEffect } from "react";
 import { applyTheme } from "@/lib/theme";
 import {
   heroBadges,
+  posts,
   profile,
+  projectRepoUrl,
   projects,
   sections,
   site,
   socials,
   stack,
   timeline,
+  writingBlog,
 } from "@/data";
 import { portfolioBio } from "@/agent/markdown";
 
@@ -69,9 +72,11 @@ const tools: WebMcpTool[] = [
     execute: () =>
       projects.map((project) => ({
         name: project.name,
+        slug: project.slug,
         tag: project.tag,
         description: project.description,
-        href: project.href,
+        href: projectRepoUrl(project) ?? `${site.url}/projects/${project.slug}`,
+        page: `${site.url}/projects/${project.slug}`,
         stack: [...project.stack],
       })),
   },
@@ -91,7 +96,22 @@ const tools: WebMcpTool[] = [
         title: item.title,
         place: item.place,
         detail: item.detail,
+        ...(item.certificate ? { certificate: item.certificate } : {}),
       })),
+  },
+  {
+    name: "list_writing",
+    description: "List Debesh Ghorui's public essays on EasyTech Bytes.",
+    inputSchema: emptyInput,
+    execute: () => ({
+      blog: writingBlog.name,
+      href: writingBlog.href,
+      posts: posts.map((post) => ({
+        title: post.title,
+        date: post.date,
+        href: post.href,
+      })),
+    }),
   },
   {
     name: "get_contact_info",
