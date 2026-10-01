@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
+import { applyTheme } from "@/lib/theme";
+
 export function ThemeToggle() {
   const [dark, setDark] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setDark(document.documentElement.classList.contains("dark"));
+    const sync = () => {
+      setDark(document.documentElement.classList.contains("dark"));
+    };
+    sync();
     setMounted(true);
+    window.addEventListener("portfolio-theme", sync);
+    return () => window.removeEventListener("portfolio-theme", sync);
   }, []);
 
   const toggle = () => {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    try {
-      localStorage.setItem("theme", next ? "dark" : "light");
-    } catch {
-      // localStorage unavailable (e.g. private browsing)
-    }
+    applyTheme(
+      document.documentElement.classList.contains("dark") ? "light" : "dark",
+    );
   };
 
   const label = mounted

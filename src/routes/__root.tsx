@@ -11,6 +11,7 @@ import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { ThemeToggle } from "../components/theme-toggle";
+import { WebMcp } from "../components/webmcp";
 import { meta, navLinks, site } from "@/data";
 
 function NotFoundComponent() {
@@ -104,6 +105,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       links: [
         { rel: "stylesheet", href: appCss },
         { rel: "icon", type: "image/png", href: "/favicon.png" },
+        {
+          rel: "alternate",
+          type: "text/markdown",
+          href: "/index.md",
+        },
+        { rel: "ai-catalog", href: "/.well-known/ai-catalog.json" },
         { rel: "apple-touch-icon", href: "/favicon.png" },
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         {
@@ -172,6 +179,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <WebMcp />
       <a href="#main" className="skip-link">
         Skip to main content
       </a>
