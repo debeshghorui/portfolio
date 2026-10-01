@@ -4,10 +4,7 @@
   </a>
 </p>
 
-<h1 align="center">Debesh Ghorui</h1>
-
 <p align="center">
-  <strong>building products · learning systems · shipping code</strong><br>
   A personal portfolio that a person can browse and an agent can quote.
 </p>
 
@@ -52,15 +49,14 @@ curl -H "Accept: text/markdown" https://debeshghorui.dev/
 ## How a request moves
 
 ```mermaid
-flowchart LR
-  Client["Browser or agent"] --> Worker["Cloudflare Worker<br/>src/server.ts"]
-  Worker --> Agent{"Known agent path?"}
-  Agent -->|yes| Docs["JSON, Markdown,<br/>OpenAPI, catalogs"]
-  Agent -->|no| SSR["TanStack Start"]
+flowchart TB
+  Client["Browser or agent"] --> Worker["Cloudflare Worker · src/server.ts"]
+  Data["src/data"] --> Worker
+  Worker --> Decision{"Known agent path?"}
+  Decision -->|yes| Docs["JSON, Markdown, OpenAPI, catalogs"]
+  Decision -->|no| SSR["TanStack Start"]
   SSR --> Page["HTML page"]
-  Data["src/data"] --> SSR
-  Data --> Docs
-  Page -->|"homepage"| Headers["RFC 8288 Link headers"]
+  Page --> Headers["RFC 8288 Link headers"]
 ```
 
 Agent routes are answered before the app renders. Everything else goes through TanStack Start. The homepage response also advertises the catalogs, the OpenAPI file, and the Markdown alternate.
