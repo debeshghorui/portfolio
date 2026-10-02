@@ -172,3 +172,32 @@
     background-size: 100% 2px;
   }
 }
+
+/* Words preloader — adapted from skiper-ui/skiper8 (Dennis Snellenberg style) */
+@keyframes preloader-word {
+  0% {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+  18% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  82% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+}
+
+@keyframes preloader-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
