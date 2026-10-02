@@ -1,35 +1,35 @@
 import {
-  contact,
-  heroBadges,
-  profile,
-  projects,
-  sections,
-  site,
-  socials,
-  stack,
-  timeline,
+    contact,
+    heroBadges,
+    profile,
+    projects,
+    sections,
+    site,
+    socials,
+    stack,
+    timeline,
 } from "@/data";
 
 export function portfolioBio(): string {
-  return `${profile.bio.before}${profile.bio.highlight}${profile.bio.after}`;
+    return `${profile.bio.before}${profile.bio.highlight}${profile.bio.after}`;
 }
 
 export function renderHomeMarkdown(): string {
-  const projectBlocks = projects
-    .map(
-      (project) =>
-        `### ${project.name}\n\n${project.tag}\n\n${project.description}\n\nStack: ${project.stack.join(", ")}\n\n${project.href}`,
-    )
-    .join("\n\n");
+    const projectBlocks = projects
+        .map(
+            (project) =>
+                `### ${project.name}\n\n${project.tag}\n\n${project.description}\n\nStack: ${project.stack.join(", ")}\n\n${project.href}`,
+        )
+        .join("\n\n");
 
-  const timelineBlocks = timeline
-    .map(
-      (item) =>
-        `### ${item.title} (${item.when})\n\n${item.place}. ${item.detail}`,
-    )
-    .join("\n\n");
+    const timelineBlocks = timeline
+        .map(
+            (item) =>
+                `### ${item.title} (${item.when})\n\n${item.place}. ${item.detail}`,
+        )
+        .join("\n\n");
 
-  return `# ${site.name}
+    return `# ${site.name}
 
 ${profile.greeting} ${site.name}.
 

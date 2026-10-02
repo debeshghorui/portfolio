@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { site } from "@/data";
 
@@ -45,6 +45,25 @@ export function Preloader() {
     const [phase, setPhase] = useState<"active" | "exiting" | "done">("active");
     const [wordIndex, setWordIndex] = useState(0);
     const [progress, setProgress] = useState(0);
+    const finishRef = useRef<() => void>(() => {});
+    const overlayRef = useRef<HTMLDivElement>(null);
+
+    // Page content rises in exactly when the panel actually starts to lift.
+    // Native listener: React doesn't reliably dispatch `transitionstart`.
+    useEffect(() => {
+        const el = overlayRef.current;
+        if (!el) return;
+        const onStart = (e: TransitionEvent) => {
+            if (e.target === el && e.propertyName === "transform") {
+                document.documentElement.setAttribute(
+                    "data-preloader-exit",
+                    "",
+                );
+            }
+        };
+        el.addEventListener("transitionstart", onStart);
+        return () => el.removeEventListener("transitionstart", onStart);
+    }, []);
 
     useEffect(() => {
         const reduce = window.matchMedia(
@@ -82,11 +101,12 @@ export function Preloader() {
         };
         raf = requestAnimationFrame(tick);
 
-        const exitTimer = window.setTimeout(
-            () => setPhase("exiting"),
-            DURATION,
-        );
-        const doneTimer = window.setTimeout(() => {
+        const root = document.documentElement;
+        let finished = false;
+        let cleanupTimer = 0;
+        const finish = () => {
+            if (finished) return;
+            finished = true;
             setPhase("done");
             document.body.style.overflow = previousOverflow;
             try {
@@ -94,13 +114,33 @@ export function Preloader() {
             } catch {
                 // ignore
             }
-        }, DURATION + EXIT_MS);
+            // Keep the flag until the page-rise animation (1150ms) is done.
+            cleanupTimer = window.setTimeout(
+                () => root.removeAttribute("data-preloader-exit"),
+                1300,
+            );
+        };
+        // Driven by the real transition events (see handlers below) so the
+        // overlay is never removed mid-slide, even if the main thread is busy.
+        finishRef.current = finish;
+
+        const exitTimer = window.setTimeout(
+            () => setPhase("exiting"),
+            DURATION,
+        );
+        // Fallback in case transitionend never fires.
+        const fallbackTimer = window.setTimeout(
+            finish,
+            DURATION + EXIT_MS + 1500,
+        );
 
         return () => {
             clearInterval(wordTimer);
             cancelAnimationFrame(raf);
             clearTimeout(exitTimer);
-            clearTimeout(doneTimer);
+            clearTimeout(fallbackTimer);
+            clearTimeout(cleanupTimer);
+            root.removeAttribute("data-preloader-exit");
             document.body.style.overflow = previousOverflow;
         };
     }, []);
@@ -113,14 +153,36 @@ export function Preloader() {
         <div
             aria-hidden="true"
             data-preloader
+            ref={overlayRef}
+            onTransitionEnd={(e) => {
+                if (
+                    e.target === e.currentTarget &&
+                    e.propertyName === "transform"
+                ) {
+                    finishRef.current();
+                }
+            }}
             style={{
                 // No-JS failsafe: hides itself if the script never runs.
                 animation: "preloader-failsafe 0s linear 8s forwards",
-                transform: exiting ? "translateY(-100%)" : "translateY(0)",
+                // Extra 12vh carries the curved bottom edge fully off-screen.
+                transform: exiting
+                    ? "translateY(calc(-100% - 12vh))"
+                    : "translateY(0)",
                 transition: `transform ${EXIT_MS}ms cubic-bezier(0.76, 0, 0.24, 1)`,
+                willChange: "transform",
             }}
             className={`fixed inset-0 z-[100] flex flex-col bg-background ${exiting ? "pointer-events-none" : ""}`}
         >
+            {/* Curved trailing edge — sits just below the viewport until exit. */}
+            <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-full bg-background"
+                style={{
+                    height: "12vh",
+                    borderRadius: "0 0 50% 50% / 0 0 100% 100%",
+                }}
+            />
             <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 sm:px-6">
                 <div className="flex items-center gap-2 pt-6 font-mono-tight text-xs text-muted-foreground">
                     <span
@@ -136,7 +198,12 @@ export function Preloader() {
                             key={wordIndex}
                             className="block text-3xl font-semibold tracking-tight text-foreground will-change-transform sm:text-5xl"
                             style={{
-                                animation: `preloader-word ${DURATION / WORDS.length}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+                                // Last word slides in and holds (no exit
+                                // animation) so the screen never goes blank.
+                                animation:
+                                    wordIndex === WORDS.length - 1
+                                        ? "preloader-word-in 450ms cubic-bezier(0.65, 0, 0.35, 1) forwards"
+                                        : `preloader-word ${DURATION / WORDS.length}ms cubic-bezier(0.65, 0, 0.35, 1)`,
                                 fontFamily:
                                     '"Inter", "Noto Sans Bengali", "Noto Sans Devanagari", "Noto Sans JP", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif',
                             }}

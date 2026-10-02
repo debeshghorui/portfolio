@@ -6,53 +6,53 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  {
-    ignores: [
-      "node_modules",
-      "dist",
-      "dist-ssr",
-      ".output",
-      ".nitro",
-      ".vinxi",
-      ".tanstack",
-      ".wrangler",
-      ".agents",
-      ".cursor",
-      "coverage",
-      "src/routeTree.gen.ts",
-    ],
-  },
-  {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ["**/*.{ts,tsx}"],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: { ...globals.browser, ...globals.node },
+    {
+        ignores: [
+            "node_modules",
+            "dist",
+            "dist-ssr",
+            ".output",
+            ".nitro",
+            ".vinxi",
+            ".tanstack",
+            ".wrangler",
+            ".agents",
+            ".cursor",
+            "coverage",
+            "src/routeTree.gen.ts",
+        ],
     },
-    plugins: {
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-    },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: [
-            {
-              name: "server-only",
-              message:
-                "TanStack Start does not use the Next.js `server-only` package. Rename the module to `*.server.ts` or mark it with `@tanstack/react-start/server-only`.",
-            },
-          ],
+    {
+        extends: [js.configs.recommended, ...tseslint.configs.recommended],
+        files: ["**/*.{ts,tsx}"],
+        languageOptions: {
+            ecmaVersion: 2020,
+            globals: { ...globals.browser, ...globals.node },
         },
-      ],
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
-      "@typescript-eslint/no-unused-vars": "off",
+        plugins: {
+            "react-hooks": reactHooks,
+            "react-refresh": reactRefresh,
+        },
+        rules: {
+            ...reactHooks.configs.recommended.rules,
+            "no-restricted-imports": [
+                "error",
+                {
+                    paths: [
+                        {
+                            name: "server-only",
+                            message:
+                                "TanStack Start does not use the Next.js `server-only` package. Rename the module to `*.server.ts` or mark it with `@tanstack/react-start/server-only`.",
+                        },
+                    ],
+                },
+            ],
+            "react-refresh/only-export-components": [
+                "warn",
+                { allowConstantExport: true },
+            ],
+            "@typescript-eslint/no-unused-vars": "off",
+        },
     },
-  },
-  eslintPluginPrettier,
+    eslintPluginPrettier,
 );

@@ -37,14 +37,14 @@ curl -H "Accept: text/markdown" https://debeshghorui.dev/
 
 ## What you get
 
-| Surface | What it is |
-| --- | --- |
-| Homepage | Hero, activity grid, projects, stack, timeline, contact. Light and dark, remembered in the browser. |
-| Pages | About, contact, privacy, and a short API note for developers. |
-| JSON API | Read-only profile, projects, stack, timeline, and contact. No key. |
-| Markdown | `Accept: text/markdown` on `/`, or `GET /index.md`. Token count in `x-markdown-tokens`. |
-| Discovery | Link headers, `llms.txt`, an RFC 9727 API catalog, an agent-skills index, and an AI catalog. |
-| WebMCP | In-page tools so a browser agent can read the portfolio and jump to a section. |
+| Surface   | What it is                                                                                          |
+| --------- | --------------------------------------------------------------------------------------------------- |
+| Homepage  | Hero, activity grid, projects, stack, timeline, contact. Light and dark, remembered in the browser. |
+| Pages     | About, contact, privacy, and a short API note for developers.                                       |
+| JSON API  | Read-only profile, projects, stack, timeline, and contact. No key.                                  |
+| Markdown  | `Accept: text/markdown` on `/`, or `GET /index.md`. Token count in `x-markdown-tokens`.             |
+| Discovery | Link headers, `llms.txt`, an RFC 9727 API catalog, an agent-skills index, and an AI catalog.        |
+| WebMCP    | In-page tools so a browser agent can read the portfolio and jump to a section.                      |
 
 ## How a request moves
 
@@ -63,14 +63,14 @@ Agent routes are answered before the app renders. Everything else goes through T
 
 ## Pages
 
-| URL | File |
-| --- | --- |
-| `/` | `src/routes/index.tsx` |
-| `/about` | `src/routes/about.tsx` |
-| `/contact` | `src/routes/contact.tsx` |
-| `/developers` | `src/routes/developers.tsx` |
-| `/privacy` | `src/routes/privacy.tsx` |
-| `/robots.txt` | `src/routes/robots[.]txt.ts` |
+| URL            | File                          |
+| -------------- | ----------------------------- |
+| `/`            | `src/routes/index.tsx`        |
+| `/about`       | `src/routes/about.tsx`        |
+| `/contact`     | `src/routes/contact.tsx`      |
+| `/developers`  | `src/routes/developers.tsx`   |
+| `/privacy`     | `src/routes/privacy.tsx`      |
+| `/robots.txt`  | `src/routes/robots[.]txt.ts`  |
 | `/sitemap.xml` | `src/routes/sitemap[.]xml.ts` |
 
 Routes are files. `src/routes/__root.tsx` is the shell around every page. `src/routeTree.gen.ts` is generated. See `src/routes/README.md` for the file-routing rules.
@@ -79,18 +79,18 @@ Routes are files. `src/routes/__root.tsx` is the shell around every page. `src/r
 
 The site is public and read-only. Errors under the API and under `/.well-known` use `application/problem+json` with a stable `code` and a `resolution`. Unknown API paths and unknown `/.well-known` paths return 404. Anything other than `GET` or `HEAD` on a known route returns 405.
 
-| Method | Path | Returns |
-| --- | --- | --- |
-| GET | `/api/portfolio.json` | Profile, projects, stack, timeline, contact |
-| GET | `/api/health` | `{ "status": "ok" }` |
-| GET | `/openapi.json` | OpenAPI 3.1 description of the API |
-| GET | `/index.md` | Homepage as Markdown |
-| GET | `/llms.txt` | Short index of what to read, and when |
-| GET | `/llms-full.txt` | Full homepage Markdown |
-| GET | `/.well-known/api-catalog` | RFC 9727 linkset |
-| GET | `/.well-known/ai-catalog.json` | AI catalog |
-| GET | `/.well-known/agent-skills/index.json` | Skills discovery index |
-| GET | `/.well-known/agent-skills/debesh-portfolio/SKILL.md` | How to read this portfolio |
+| Method | Path                                                  | Returns                                     |
+| ------ | ----------------------------------------------------- | ------------------------------------------- |
+| GET    | `/api/portfolio.json`                                 | Profile, projects, stack, timeline, contact |
+| GET    | `/api/health`                                         | `{ "status": "ok" }`                        |
+| GET    | `/openapi.json`                                       | OpenAPI 3.1 description of the API          |
+| GET    | `/index.md`                                           | Homepage as Markdown                        |
+| GET    | `/llms.txt`                                           | Short index of what to read, and when       |
+| GET    | `/llms-full.txt`                                      | Full homepage Markdown                      |
+| GET    | `/.well-known/api-catalog`                            | RFC 9727 linkset                            |
+| GET    | `/.well-known/ai-catalog.json`                        | AI catalog                                  |
+| GET    | `/.well-known/agent-skills/index.json`                | Skills discovery index                      |
+| GET    | `/.well-known/agent-skills/debesh-portfolio/SKILL.md` | How to read this portfolio                  |
 
 `robots.txt` allows crawling and sets `Content-Signal: search=yes, ai-input=yes, ai-train=yes`, with a sitemap and an Agentmap.
 
@@ -100,18 +100,18 @@ On page load the site registers WebMCP tools: `get_profile`, `list_projects`, `g
 
 Copy lives in `src/data`. Components read those modules. The JSON API and the Markdown renderer read them too.
 
-| Change | File |
-| --- | --- |
-| Name, URL, handle, email | `src/data/site/index.ts` |
-| Titles and descriptions | `src/data/meta/index.ts` |
-| Greeting, tagline, bio | `src/data/profile/index.ts` |
-| Projects | `src/data/projects/index.ts` |
-| Tools on the stack row | `src/data/stack/index.ts` |
-| Current study | `src/data/timeline/index.ts` |
-| Social profiles | `src/data/links/index.ts`, `src/data/socials/index.ts` |
-| Contact copy | `src/data/contact/index.ts` |
-| Section titles | `src/data/sections/index.ts` |
-| Nav labels | `src/data/nav/index.ts` |
+| Change                   | File                                                   |
+| ------------------------ | ------------------------------------------------------ |
+| Name, URL, handle, email | `src/data/site/index.ts`                               |
+| Titles and descriptions  | `src/data/meta/index.ts`                               |
+| Greeting, tagline, bio   | `src/data/profile/index.ts`                            |
+| Projects                 | `src/data/projects/index.ts`                           |
+| Tools on the stack row   | `src/data/stack/index.ts`                              |
+| Current study            | `src/data/timeline/index.ts`                           |
+| Social profiles          | `src/data/links/index.ts`, `src/data/socials/index.ts` |
+| Contact copy             | `src/data/contact/index.ts`                            |
+| Section titles           | `src/data/sections/index.ts`                           |
+| Nav labels               | `src/data/nav/index.ts`                                |
 
 Portrait: `src/assets/image.webp`.
 

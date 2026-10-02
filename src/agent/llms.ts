@@ -1,7 +1,7 @@
 import { meta, site } from "@/data";
 
 export function renderLlmsTxt(): string {
-  return `# ${site.name}
+    return `# ${site.name}
 
 > ${meta.description}
 

@@ -6,43 +6,43 @@ import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  server: {
-    port: 3000,
-  },
-  resolve: {
-    alias: {
-      "@": `${process.cwd()}/src`,
+    server: {
+        port: 3000,
     },
-    dedupe: [
-      "react",
-      "react-dom",
-      "react/jsx-runtime",
-      "react/jsx-dev-runtime",
-      "@tanstack/react-query",
-      "@tanstack/query-core",
-    ],
-  },
-  plugins: [
-    tsConfigPaths({ projects: ["./tsconfig.json"] }),
-    tanstackStart(),
-    nitro({
-      defaultPreset: "cloudflare-module",
-      cloudflare: {
-        wrangler: {
-          observability: {
-            enabled: true,
-            logs: {
-              enabled: true,
-              invocation_logs: true,
-            },
-            traces: {
-              enabled: true,
-            },
-          },
+    resolve: {
+        alias: {
+            "@": `${process.cwd()}/src`,
         },
-      },
-    }),
-    viteReact(),
-    tailwindcss(),
-  ],
+        dedupe: [
+            "react",
+            "react-dom",
+            "react/jsx-runtime",
+            "react/jsx-dev-runtime",
+            "@tanstack/react-query",
+            "@tanstack/query-core",
+        ],
+    },
+    plugins: [
+        tsConfigPaths({ projects: ["./tsconfig.json"] }),
+        tanstackStart(),
+        nitro({
+            defaultPreset: "cloudflare-module",
+            cloudflare: {
+                wrangler: {
+                    observability: {
+                        enabled: true,
+                        logs: {
+                            enabled: true,
+                            invocation_logs: true,
+                        },
+                        traces: {
+                            enabled: true,
+                        },
+                    },
+                },
+            },
+        }),
+        viteReact(),
+        tailwindcss(),
+    ],
 });

@@ -8,26 +8,29 @@ import { TimelineSection } from "@/components/section/timeline-section";
 import { meta } from "@/data";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: meta.title },
-      { name: "description", content: meta.description },
-      { property: "og:title", content: meta.ogTitle },
-      { property: "og:description", content: meta.ogDescription },
-    ],
-  }),
-  component: Home,
+    head: () => ({
+        meta: [
+            { title: meta.title },
+            { name: "description", content: meta.description },
+            { property: "og:title", content: meta.ogTitle },
+            { property: "og:description", content: meta.ogDescription },
+        ],
+    }),
+    component: Home,
 });
 
 function Home() {
-  return (
-    <main id="main" className="mx-auto max-w-3xl px-4 sm:px-6 pt-10 sm:pt-16">
-      <HeroSection />
-      <ActivitySection />
-      <ProjectsSection />
-      <StackSection />
-      <TimelineSection />
-      <ContactSection />
-    </main>
-  );
+    return (
+        <main
+            id="main"
+            className="mx-auto max-w-3xl px-4 sm:px-6 pt-10 sm:pt-16"
+        >
+            <HeroSection />
+            <ActivitySection />
+            <ProjectsSection />
+            <StackSection />
+            <TimelineSection />
+            <ContactSection />
+        </main>
+    );
 }

@@ -38,7 +38,7 @@ Status: skipped
 
 Issue: DNS for AI Discovery (DNS-AID) well-known entrypoint records not found
 
-Fix: Publish DNS for AI Discovery (DNS-AID) records under your domain, for example _index._agents.example.com or _a2a._agents.example.com, using ServiceMode SVCB/HTTPS records with alpn and endpoint parameters. Sign the public discovery zone with DNSSEC so validating resolvers return authenticated data.
+Fix: Publish DNS for AI Discovery (DNS-AID) records under your domain, for example \_index.\_agents.example.com or \_a2a.\_agents.example.com, using ServiceMode SVCB/HTTPS records with alpn and endpoint parameters. Sign the public discovery zone with DNSSEC so validating resolvers return authenticated data.
 
 Skill: <https://isitagentready.com/.well-known/agent-skills/dns-aid/SKILL.md>
 

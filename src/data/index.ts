@@ -3,10 +3,10 @@ export { links } from "./links";
 export { meta } from "./meta";
 export { profile } from "./profile";
 export {
-  socials,
-  heroBadges,
-  type SocialIcon,
-  type HeroBadgeIcon,
+    socials,
+    heroBadges,
+    type SocialIcon,
+    type HeroBadgeIcon,
 } from "./socials";
 export { projects } from "./projects";
 export { stack, stackLogoCDN } from "./stack";
