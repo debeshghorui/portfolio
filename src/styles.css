@@ -193,11 +193,13 @@
   }
 }
 
-@keyframes preloader-fade-in {
-  from {
-    opacity: 0;
-  }
+@keyframes preloader-failsafe {
   to {
-    opacity: 1;
+    visibility: hidden;
+    pointer-events: none;
   }
+}
+
+html[data-preloader-skip] [data-preloader] {
+  display: none;
 }
