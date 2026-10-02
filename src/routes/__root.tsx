@@ -11,7 +11,7 @@ import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { Preloader, preloaderInitScript } from "../components/preloader";
-import { ThemeToggle } from "../components/theme-toggle";
+import { ThemeToggleButton } from "../components/spaceui/theme-toggle";
 import { WebMcp } from "../components/webmcp";
 import { meta, navLinks, site, socials } from "@/data";
 
@@ -195,7 +195,7 @@ function Nav() {
                             {label}
                         </a>
                     ))}
-                    <ThemeToggle />
+                    <ThemeToggleButton variant="circle" start="top-right" />
                 </nav>
             </div>
         </header>
