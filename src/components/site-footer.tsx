@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { ArrowUp } from "lucide-react";
-
+import { ArrowUpIcon } from "@/components/animated-icons/arrow-up";
+import { useIconAnimation } from "@/hooks/use-icon-animation";
 import { footerLinks, site, socials } from "@/data";
 
 const FOCUS =
@@ -58,6 +58,7 @@ function LinkColumn({
 
 export function SiteFooter() {
     const time = useLocalTime(site.timeZone);
+    const arrowIcon = useIconAnimation();
 
     const scrollToTop = () => {
         const reduce = window.matchMedia(
@@ -133,12 +134,15 @@ export function SiteFooter() {
                 <button
                     type="button"
                     onClick={scrollToTop}
+                    {...arrowIcon.triggers}
                     className={`group inline-flex items-center gap-1.5 px-1 py-1 ${LINK}`}
                 >
                     back to top
-                    <ArrowUp
+                    <ArrowUpIcon
+                        ref={arrowIcon.ref}
+                        size={14}
                         aria-hidden="true"
-                        className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5"
+                        className="pointer-events-none flex items-center justify-center"
                     />
                 </button>
             </div>

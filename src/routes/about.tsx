@@ -30,7 +30,7 @@ function AboutPage() {
             </p>
             <p>
                 He is a computer science undergraduate in India, in the batch of
-                2029. The homepage badges say the same thing in shorter form:
+                2028. The homepage badges say the same thing in shorter form:
                 open source, in public, based in India.
             </p>
             <p>Current study, also listed on the homepage timeline:</p>
