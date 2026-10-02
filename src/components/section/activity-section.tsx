@@ -1,6 +1,6 @@
-import { ContributionGrid } from "@/components/contribution-grid";
+import { GitHubActivity } from "@/components/spaceui/github-activity";
 import { Section } from "@/components/section/section";
-import { sections } from "@/data";
+import { sections, links } from "@/data";
 
 export function ActivitySection() {
     return (
@@ -9,7 +9,7 @@ export function ActivitySection() {
             subtitle={sections.activity.subtitle}
         >
             <div className="rounded-lg border border-border bg-card p-4 sm:p-5">
-                <ContributionGrid />
+                <GitHubActivity user={links.github} />
             </div>
         </Section>
     );

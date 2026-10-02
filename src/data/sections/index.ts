@@ -1,7 +1,7 @@
 export const sections = {
     activity: {
         title: "Activity",
-        subtitle: "GitHub-ish contributions over the last year.",
+        subtitle: "My GitHub contributions over the last year.",
     },
     projects: {
         id: "projects",
