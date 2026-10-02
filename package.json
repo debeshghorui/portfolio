@@ -1,5 +1,25 @@
 {
-  "name": "tanstack_start_ts",
+  "name": "Portfolio",
+  "version": "1.0.0",
+  "description": "My personal portfolio",
+  "author": "Debesh Ghorui",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/debeshghorui/portfolio.git"
+  },
+  "homepage": "https://debeshghorui.dev",
+  "bugs": {
+    "url": "https://github.com/debeshghorui/portfolio/issues"
+  },
+  "keywords": [
+    "portfolio",
+    "debesh ghorui",
+    "debeshghorui",
+    "portfolio",
+    "portfolio website",
+    "portfolio website template"
+  ],
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -9,7 +29,10 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write \"**/*.{ts,tsx}\""
+    "lint:fix": "eslint . --fix",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -77,6 +100,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
     "nitro": "3.0.260603-beta",
     "prettier": "^3.7.3",
     "typescript": "^5.8.3",
