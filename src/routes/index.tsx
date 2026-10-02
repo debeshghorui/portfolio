@@ -26,9 +26,9 @@ function Home() {
             className="mx-auto max-w-3xl px-4 sm:px-6 pt-10 sm:pt-16"
         >
             <HeroSection />
+            <StackSection />
             <ActivitySection />
             <ProjectsSection />
-            <StackSection />
             <TimelineSection />
             <ContactSection />
         </main>
