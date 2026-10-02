@@ -1,0 +1,44 @@
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# lockfiles
+bun.lock
+bun.lockb
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# build output
+dist
+dist-ssr
+.output
+.nitro
+
+# framework / tooling state
+.tanstack
+.wrangler
+.vinxi
+.husky/_
+.agents
+.cursor
+skills-lock.json
+
+# generated
+src/routeTree.gen.ts
+
+# testing / misc
+coverage
+*.tsbuildinfo
+.eslintcache
+.DS_Store
+
+# env files
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+
+# static assets
+public
