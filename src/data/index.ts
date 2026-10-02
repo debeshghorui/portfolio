@@ -13,4 +13,4 @@ export { stack, stackLogoCDN } from "./stack";
 export { timeline } from "./timeline";
 export { sections } from "./sections";
 export { contact } from "./contact";
-export { navLinks } from "./nav";
+export { navLinks, footerLinks } from "./nav";

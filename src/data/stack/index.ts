@@ -3,24 +3,24 @@ export const stackLogoCDN = "https://cdn.simpleicons.org/";
 export const stack: readonly {
     name: string;
     slug: string;
-    invertOnDark?: boolean;
+    hex?: string;
 }[] = [
-    { name: "TypeScript", slug: "typescript" },
-    { name: "JavaScript", slug: "javascript" },
-    { name: "React", slug: "react" },
-    { name: "Next.js", slug: "nextdotjs", invertOnDark: true },
-    { name: "Tailwind CSS", slug: "tailwindcss" },
-    { name: "Shadcn UI", slug: "shadcnui", invertOnDark: true },
-    { name: "Expo", slug: "expo", invertOnDark: true },
-    { name: "Bun", slug: "bun", invertOnDark: true },
-    { name: "Node.js", slug: "nodedotjs" },
-    { name: "Express.js", slug: "express", invertOnDark: true },
-    { name: "tRPC", slug: "trpc" },
+    { name: "TypeScript", slug: "typescript", hex: "#3178C6" },
+    { name: "JavaScript", slug: "javascript", hex: "#F7DF1E" },
+    { name: "React", slug: "react", hex: "#61DAFB" },
+    { name: "Next.js", slug: "nextdotjs" },
+    { name: "Tailwind CSS", slug: "tailwindcss", hex: "#06B6D4" },
+    { name: "Shadcn UI", slug: "shadcnui" },
+    { name: "Expo", slug: "expo" },
+    { name: "Bun", slug: "bun" },
+    { name: "Node.js", slug: "nodedotjs", hex: "#5FA04E" },
+    { name: "Express.js", slug: "express" },
+    { name: "tRPC", slug: "trpc", hex: "#2596BE" },
     { name: "Prisma", slug: "prisma" },
-    { name: "PostgreSQL", slug: "postgresql" },
-    { name: "MongoDB", slug: "mongodb" },
-    { name: "Redis", slug: "redis" },
-    { name: "Docker", slug: "docker" },
-    { name: "Linux", slug: "linux" },
-    { name: "Git", slug: "git" },
+    { name: "PostgreSQL", slug: "postgresql", hex: "#4169E1" },
+    { name: "MongoDB", slug: "mongodb", hex: "#47A248" },
+    { name: "Redis", slug: "redis", hex: "#FF4438" },
+    { name: "Docker", slug: "docker", hex: "#2496ED" },
+    { name: "Linux", slug: "linux", hex: "#FCC624" },
+    { name: "Git", slug: "git", hex: "#F05032" },
 ] as const;

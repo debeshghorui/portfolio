@@ -7,12 +7,14 @@ import {
     HeadContent,
     Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { MotionConfig, motion } from "motion/react";
+import { type ReactNode, useState } from "react";
 
 import appCss from "../styles.css?url";
 import { Preloader, preloaderInitScript } from "../components/preloader";
 import { ThemeToggleButton } from "../components/spaceui/theme-toggle";
 import { WebMcp } from "../components/webmcp";
+import { SiteFooter } from "../components/site-footer";
 import { meta, navLinks, site, socials } from "@/data";
 
 function NotFoundComponent() {
@@ -174,9 +176,46 @@ function RootShell({ children }: { children: ReactNode }) {
     );
 }
 
+const navLinkCls =
+    "relative isolate rounded-sm px-2 py-1 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+
+function NavLinks() {
+    const [hovered, setHovered] = useState<string | null>(null);
+
+    return (
+        <div
+            className="flex items-center gap-1 sm:gap-2"
+            onMouseLeave={() => setHovered(null)}
+        >
+            {navLinks.map(({ href, label }) => (
+                <a
+                    key={href}
+                    href={href}
+                    className={navLinkCls}
+                    onMouseEnter={() => setHovered(href)}
+                    onFocus={() => setHovered(href)}
+                    onBlur={() => setHovered(null)}
+                >
+                    {hovered === href && (
+                        <motion.span
+                            layoutId="nav-hover"
+                            aria-hidden="true"
+                            className="absolute inset-0 -z-10 rounded-sm bg-muted"
+                            transition={{
+                                type: "spring",
+                                bounce: 0.15,
+                                duration: 0.35,
+                            }}
+                        />
+                    )}
+                    {label}
+                </a>
+            ))}
+        </div>
+    );
+}
+
 function Nav() {
-    const linkCls =
-        "rounded-sm px-1 py-1 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
     return (
         <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b border-border/60">
             <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4">
@@ -188,13 +227,9 @@ function Nav() {
                 </Link>
                 <nav
                     aria-label="Primary"
-                    className="flex items-center gap-3 sm:gap-5 font-mono-tight text-sm text-muted-foreground"
+                    className="flex items-center gap-2 sm:gap-3 font-mono-tight text-sm text-muted-foreground"
                 >
-                    {navLinks.map(({ href, label }) => (
-                        <a key={href} href={href} className={linkCls}>
-                            {label}
-                        </a>
-                    ))}
+                    <NavLinks />
                     <ThemeToggleButton variant="circle" start="top-right" />
                 </nav>
             </div>
@@ -207,44 +242,16 @@ function RootComponent() {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <Preloader />
-            <WebMcp />
-            <a href="#main" className="skip-link">
-                Skip to main content
-            </a>
-            <Nav />
-            <Outlet />
-            <footer className="mx-auto mt-24 max-w-3xl px-6 pb-12">
-                <nav
-                    aria-label="Site"
-                    className="flex flex-wrap gap-x-4 gap-y-2 border-t border-border/60 pt-6 font-mono-tight text-xs text-muted-foreground"
-                >
-                    <a href="/about" className="hover:text-foreground">
-                        about
-                    </a>
-                    <a href="/contact" className="hover:text-foreground">
-                        contact
-                    </a>
-                    <a href="/privacy" className="hover:text-foreground">
-                        privacy
-                    </a>
-                    <a href="/developers" className="hover:text-foreground">
-                        api
-                    </a>
-                    <a href="/openapi.json" className="hover:text-foreground">
-                        openapi
-                    </a>
-                    <a href="/llms.txt" className="hover:text-foreground">
-                        llms.txt
-                    </a>
-                </nav>
-                <div className="pt-4 font-mono-tight text-xs text-muted-foreground flex flex-wrap items-center justify-between gap-2">
-                    <span>
-                        © {new Date().getFullYear()} {site.nameShort}
-                    </span>
-                    <span>{site.footerTagline}</span>
-                </div>
-            </footer>
+            <MotionConfig reducedMotion="user">
+                <Preloader />
+                <WebMcp />
+                <a href="#main" className="skip-link">
+                    Skip to main content
+                </a>
+                <Nav />
+                <Outlet />
+                <SiteFooter />
+            </MotionConfig>
         </QueryClientProvider>
     );
 }

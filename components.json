@@ -4,6 +4,7 @@
     "rsc": false,
     "tsx": true,
     "tailwind": {
+        "config": "",
         "css": "src/styles.css",
         "baseColor": "slate",
         "cssVariables": true,
@@ -20,6 +21,8 @@
     },
     "registries": {
         "@skiper-ui": "https://skiper-ui.com/registry/{name}.json",
-        "@spaceui": "https://www.spaceui.one/r/{name}.json"
+        "@spaceui": "https://www.spaceui.one/r/{name}.json",
+        "@lucide-animated": "https://lucide-animated.com/r/{name}.json",
+        "@magicui": "https://magicui.design/r/{name}"
     }
 }

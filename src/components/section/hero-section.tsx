@@ -1,12 +1,21 @@
-import {
-    Github,
-    Linkedin,
-    Instagram,
-    Mail,
-    MapPin,
-    GraduationCap,
-} from "lucide-react";
 import avatar from "@/assets/image.webp";
+import { GithubIcon } from "@/components/animated-icons/github";
+import { GraduationCapIcon } from "@/components/animated-icons/graduation-cap";
+import { InstagramIcon } from "@/components/animated-icons/instagram";
+import { LinkedinIcon } from "@/components/animated-icons/linkedin";
+import { MailIcon } from "@/components/animated-icons/mail";
+import { MapPinIcon } from "@/components/animated-icons/map-pin";
+import { XLogoIcon } from "@/components/animated-icons/x-logo";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+    type AnimatedIcon,
+    useIconAnimation,
+} from "@/hooks/use-icon-animation";
 import {
     heroBadges,
     profile,
@@ -19,33 +28,80 @@ import {
 const FOCUS =
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
-function XIcon(props: React.SVGProps<SVGSVGElement>) {
+const socialIcons: Record<SocialIcon, AnimatedIcon> = {
+    github: GithubIcon,
+    x: XLogoIcon,
+    linkedin: LinkedinIcon,
+    instagram: InstagramIcon,
+    mail: MailIcon,
+};
+
+const badgeIcons: Record<HeroBadgeIcon, AnimatedIcon> = {
+    github: GithubIcon,
+    "map-pin": MapPinIcon,
+    "graduation-cap": GraduationCapIcon,
+};
+
+function SocialLink({
+    href,
+    label,
+    icon,
+}: {
+    href: string;
+    label: string;
+    icon: SocialIcon;
+}) {
+    const Icon = socialIcons[icon];
+    const { ref, triggers } = useIconAnimation();
+    const external = href.startsWith("http");
+
     return (
-        <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-            <path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.86l-5.37-7.02L4.06 22H.8l8.03-9.18L.75 2h7.02l4.86 6.42L18.24 2Zm-1.2 18h1.9L7.05 4H5.04l12 16Z" />
-        </svg>
+        <Tooltip>
+            <TooltipTrigger asChild>
+                <a
+                    href={href}
+                    {...(external && { target: "_blank", rel: "noreferrer" })}
+                    aria-label={
+                        external ? `${label} (opens in new tab)` : label
+                    }
+                    {...triggers}
+                    className={`inline-flex h-11 w-11 sm:h-10 sm:w-10 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-[color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-accent hover:text-accent active:translate-y-0 active:scale-95 ${FOCUS}`}
+                >
+                    <Icon
+                        ref={ref}
+                        size={16}
+                        aria-hidden="true"
+                        className="pointer-events-none flex items-center justify-center"
+                    />
+                </a>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="font-mono-tight">
+                {label.toLowerCase()}
+            </TooltipContent>
+        </Tooltip>
     );
 }
 
-const socialIcons: Record<
-    SocialIcon,
-    React.ComponentType<React.SVGProps<SVGSVGElement>>
-> = {
-    github: Github,
-    x: XIcon,
-    linkedin: Linkedin,
-    instagram: Instagram,
-    mail: Mail,
-};
+function HeroBadge({ icon, text }: { icon: HeroBadgeIcon; text: string }) {
+    const Icon = badgeIcons[icon];
+    const { ref, triggers } = useIconAnimation();
 
-const badgeIcons: Record<
-    HeroBadgeIcon,
-    React.ComponentType<{ className?: string }>
-> = {
-    github: Github,
-    "map-pin": MapPin,
-    "graduation-cap": GraduationCap,
-};
+    return (
+        <span
+            onMouseEnter={triggers.onMouseEnter}
+            onMouseLeave={triggers.onMouseLeave}
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+        >
+            <Icon
+                ref={ref}
+                size={14}
+                aria-hidden="true"
+                className="pointer-events-none flex items-center justify-center"
+            />{" "}
+            {text}
+        </span>
+    );
+}
 
 export function HeroSection() {
     return (
@@ -85,45 +141,23 @@ export function HeroSection() {
                 {profile.bio.after}
             </p>
 
-            <ul
-                aria-label="Social profiles"
-                className="flex flex-wrap items-center gap-2 sm:gap-3 list-none p-0 m-0"
-            >
-                {socials.map(({ href, label, icon }) => {
-                    const Icon = socialIcons[icon];
-                    return (
-                        <li key={label}>
-                            <a
-                                href={href}
-                                target="_blank"
-                                rel="noreferrer"
-                                aria-label={`${label} (opens in new tab)`}
-                                className={`inline-flex h-11 w-11 sm:h-10 sm:w-10 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-accent hover:text-accent ${FOCUS}`}
-                            >
-                                <Icon
-                                    className="h-4 w-4"
-                                    aria-hidden="true"
-                                    focusable="false"
-                                />
-                            </a>
+            <TooltipProvider delayDuration={250} skipDelayDuration={150}>
+                <ul
+                    aria-label="Social profiles"
+                    className="flex flex-wrap items-center gap-2 sm:gap-3 list-none p-0 m-0"
+                >
+                    {socials.map((social) => (
+                        <li key={social.label}>
+                            <SocialLink {...social} />
                         </li>
-                    );
-                })}
-            </ul>
+                    ))}
+                </ul>
+            </TooltipProvider>
 
             <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono-tight text-xs text-muted-foreground">
-                {heroBadges.map(({ icon, text }) => {
-                    const Icon = badgeIcons[icon];
-                    return (
-                        <span
-                            key={text}
-                            className="inline-flex items-center gap-1.5"
-                        >
-                            <Icon className="h-3.5 w-3.5" aria-hidden="true" />{" "}
-                            {text}
-                        </span>
-                    );
-                })}
+                {heroBadges.map(({ icon, text }) => (
+                    <HeroBadge key={text} icon={icon} text={text} />
+                ))}
             </div>
         </section>
     );
