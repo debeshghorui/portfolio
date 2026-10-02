@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { Preloader, preloaderInitScript } from "../components/preloader";
 import { ThemeToggleButton } from "../components/spaceui/theme-toggle";
 import { WebMcp } from "../components/webmcp";
+import { SpringCursor } from "../components/ui/skiper-ui/skiper61";
 import { meta, navLinks, site, socials } from "@/data";
 
 function NotFoundComponent() {
@@ -209,6 +210,7 @@ function RootComponent() {
         <QueryClientProvider client={queryClient}>
             <Preloader />
             <WebMcp />
+            <SpringCursor />
             <a href="#main" className="skip-link">
                 Skip to main content
             </a>
