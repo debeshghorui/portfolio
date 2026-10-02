@@ -6,4 +6,6 @@ export const site = {
     email: "hello@debeshghorui.dev",
     avatarAlt: "Portrait of Debesh Ghorui",
     footerTagline: "built with curiosity & caffeine ☕",
+    timeZone: "Asia/Kolkata",
+    locationLabel: "India",
 } as const;

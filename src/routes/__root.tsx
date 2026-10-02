@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { Preloader, preloaderInitScript } from "../components/preloader";
 import { ThemeToggleButton } from "../components/spaceui/theme-toggle";
 import { WebMcp } from "../components/webmcp";
+import { SiteFooter } from "../components/site-footer";
 import { meta, navLinks, site, socials } from "@/data";
 
 function NotFoundComponent() {
@@ -214,37 +215,7 @@ function RootComponent() {
             </a>
             <Nav />
             <Outlet />
-            <footer className="mx-auto mt-24 max-w-3xl px-6 pb-12">
-                <nav
-                    aria-label="Site"
-                    className="flex flex-wrap gap-x-4 gap-y-2 border-t border-border/60 pt-6 font-mono-tight text-xs text-muted-foreground"
-                >
-                    <a href="/about" className="hover:text-foreground">
-                        about
-                    </a>
-                    <a href="/contact" className="hover:text-foreground">
-                        contact
-                    </a>
-                    <a href="/privacy" className="hover:text-foreground">
-                        privacy
-                    </a>
-                    <a href="/developers" className="hover:text-foreground">
-                        api
-                    </a>
-                    <a href="/openapi.json" className="hover:text-foreground">
-                        openapi
-                    </a>
-                    <a href="/llms.txt" className="hover:text-foreground">
-                        llms.txt
-                    </a>
-                </nav>
-                <div className="pt-4 font-mono-tight text-xs text-muted-foreground flex flex-wrap items-center justify-between gap-2">
-                    <span>
-                        © {new Date().getFullYear()} {site.nameShort}
-                    </span>
-                    <span>{site.footerTagline}</span>
-                </div>
-            </footer>
+            <SiteFooter />
         </QueryClientProvider>
     );
 }
