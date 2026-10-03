@@ -12,7 +12,7 @@ function StackChip({ item }: { item: (typeof stack)[number] }) {
             style={
                 { "--brand": item.hex ?? "var(--foreground)" } as CSSProperties
             }
-            className="group/chip flex shrink-0 items-center gap-2 rounded-xl border border-black/5 bg-white/40 px-4 py-2 text-sm font-normal lowercase text-foreground transition-all duration-300 hover:bg-white hover:shadow-sm dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/15"
+            className="group/chip flex shrink-0 items-center gap-2 rounded-xl border border-black/5 bg-white/40 px-4 py-2 text-sm font-normal lowercase text-foreground transition-all duration-300 hover:border-accent hover:bg-white hover:shadow-sm dark:border-white/10 dark:bg-white/10 dark:hover:border-accent dark:hover:bg-white/15"
         >
             <span
                 style={{

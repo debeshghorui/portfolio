@@ -26,11 +26,11 @@ export const projects = [
         stack: ["Next.js", "Node.js", "AI"],
     },
     {
-        name: "ChaiTailwind",
-        tag: "v1.0.0",
+        name: "BrewCSS",
+        tag: "v0.2.0",
         description:
             "A lightweight utility-first CSS framework built from scratch to explore compiler design, utility generation, and modern styling workflows.",
-        href: "https://github.com/debeshghorui/chaitailwind",
-        stack: ["TypeScript", "Node.js", "CSS"],
+        href: "https://github.com/debeshghorui/BrewCSS",
+        stack: ["JavaScript", "Node.js", "CSS"],
     },
 ] as const;
