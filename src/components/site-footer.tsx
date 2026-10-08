@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowUpIcon } from "@/components/animated-icons/arrow-up";
 import { useIconAnimation } from "@/hooks/use-icon-animation";
@@ -39,6 +40,35 @@ function useLocalTime(timeZone: string) {
     return time;
 }
 
+function FooterHref({
+    href,
+    className,
+    children,
+}: {
+    href: string;
+    className: string;
+    children: React.ReactNode;
+}) {
+    if (
+        href === "/about" ||
+        href === "/contact" ||
+        href === "/privacy" ||
+        href === "/developers"
+    ) {
+        return (
+            <Link to={href} className={className}>
+                {children}
+            </Link>
+        );
+    }
+
+    return (
+        <a href={href} className={className}>
+            {children}
+        </a>
+    );
+}
+
 function LinkColumn({
     title,
     children,
@@ -73,9 +103,9 @@ export function SiteFooter() {
                 <LinkColumn title="site">
                     {footerLinks.site.map(({ href, label }) => (
                         <li key={href}>
-                            <a href={href} className={LINK}>
+                            <FooterHref href={href} className={LINK}>
                                 {label}
-                            </a>
+                            </FooterHref>
                         </li>
                     ))}
                 </LinkColumn>
@@ -107,9 +137,9 @@ export function SiteFooter() {
                 <LinkColumn title="for machines">
                     {footerLinks.machines.map(({ href, label }) => (
                         <li key={href}>
-                            <a href={href} className={LINK}>
+                            <FooterHref href={href} className={LINK}>
                                 {label}
-                            </a>
+                            </FooterHref>
                         </li>
                     ))}
                 </LinkColumn>

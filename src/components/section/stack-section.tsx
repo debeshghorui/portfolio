@@ -37,7 +37,7 @@ export function StackSection() {
         <section
             id={sections.stack.id}
             aria-labelledby="stack-heading"
-            className="mt-12 scroll-mt-24"
+            className="section-rise mt-12 scroll-mt-24"
         >
             <h2 id="stack-heading" className="sr-only">
                 {sections.stack.title}

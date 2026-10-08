@@ -146,6 +146,55 @@ function getShapeClasses(shape: GitHubActivityShape) {
     }
 }
 
+const WEEK_EASE = [0.22, 1, 0.36, 1] as const;
+
+const weekColumnVariants = {
+    hidden: { opacity: 0, scale: 0.4 },
+    show: (weekIndex: number) => ({
+        opacity: 1,
+        scale: 1,
+        transition: {
+            duration: 0.45,
+            delay: weekIndex * 0.012,
+            ease: WEEK_EASE,
+        },
+    }),
+};
+
+/** One contribution column. The parent grid owns when the wave starts. */
+function ContributionWeekColumn({
+    weekIndex,
+    animateIn,
+    className,
+    style,
+    children,
+}: {
+    weekIndex: number;
+    animateIn: boolean;
+    className?: string;
+    style?: React.CSSProperties;
+    children: React.ReactNode;
+}) {
+    if (!animateIn) {
+        return (
+            <div className={className} style={style}>
+                {children}
+            </div>
+        );
+    }
+
+    return (
+        <motion.div
+            custom={weekIndex}
+            variants={weekColumnVariants}
+            style={{ ...style, transformOrigin: "center bottom" }}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
+}
+
 function formatDate(dateString: string): string {
     const parts = dateString.split("-").map(Number);
     const year = parts[0];
@@ -540,6 +589,8 @@ export function GitHubActivity({
         }
     }, [finalContributions]);
 
+    const revealGrid = !loading;
+
     const isRepo = resolvedTarget?.type === "repo";
     const displayName = resolvedTarget
         ? isRepo
@@ -670,29 +721,22 @@ export function GitHubActivity({
                                         </div>
                                         <div className="h-[10px]" />
                                     </div>
-                                    <div
+                                    <motion.div
+                                        key={revealGrid ? "live" : "pending"}
                                         className="flex"
                                         style={{ gap: "2px" }}
+                                        initial={revealGrid ? "hidden" : false}
+                                        whileInView={
+                                            revealGrid ? "show" : undefined
+                                        }
+                                        viewport={{ once: true, amount: 0.4 }}
                                     >
                                         {finalContributions.weeks.map(
                                             (week, weekIndex) => (
-                                                <motion.div
+                                                <ContributionWeekColumn
                                                     key={weekIndex}
-                                                    initial={{
-                                                        opacity: 0,
-                                                        scale: 0.5,
-                                                    }}
-                                                    animate={{
-                                                        opacity: 1,
-                                                        scale: 1,
-                                                    }}
-                                                    transition={{
-                                                        duration: 0.25,
-                                                        delay:
-                                                            0.1 +
-                                                            weekIndex * 0.004,
-                                                        ease: "easeOut",
-                                                    }}
+                                                    weekIndex={weekIndex}
+                                                    animateIn={revealGrid}
                                                     className="flex flex-col"
                                                     style={{ gap: "2px" }}
                                                 >
@@ -749,10 +793,10 @@ export function GitHubActivity({
                                                             </Tooltip>
                                                         ),
                                                     )}
-                                                </motion.div>
+                                                </ContributionWeekColumn>
                                             ),
                                         )}
-                                    </div>
+                                    </motion.div>
                                 </div>
                             </div>
                         </div>
@@ -796,24 +840,23 @@ export function GitHubActivity({
                                 <span>Fri</span>
                                 <span></span>
                             </div>
-                            <div
+                            <motion.div
+                                key={revealGrid ? "live" : "pending"}
                                 className="grid flex-1"
                                 style={{
                                     gridTemplateColumns: `repeat(${finalContributions.weeks.length}, 1fr)`,
                                     gap: "3px",
                                 }}
+                                initial={revealGrid ? "hidden" : false}
+                                whileInView={revealGrid ? "show" : undefined}
+                                viewport={{ once: true, amount: 0.4 }}
                             >
                                 {finalContributions.weeks.map(
                                     (week, weekIndex) => (
-                                        <motion.div
+                                        <ContributionWeekColumn
                                             key={weekIndex}
-                                            initial={{ opacity: 0, scale: 0.5 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{
-                                                duration: 0.25,
-                                                delay: 0.1 + weekIndex * 0.004,
-                                                ease: "easeOut",
-                                            }}
+                                            weekIndex={weekIndex}
+                                            animateIn={revealGrid}
                                             className="flex flex-col gap-0.75"
                                         >
                                             {week.contributionDays.map(
@@ -865,10 +908,10 @@ export function GitHubActivity({
                                                     </Tooltip>
                                                 ),
                                             )}
-                                        </motion.div>
+                                        </ContributionWeekColumn>
                                     ),
                                 )}
-                            </div>
+                            </motion.div>
                         </div>
                     </div>
                 </div>

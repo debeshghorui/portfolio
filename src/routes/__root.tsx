@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-    Outlet,
     Link,
     createRootRouteWithContext,
     useRouter,
@@ -11,7 +10,9 @@ import { MotionConfig, motion } from "motion/react";
 import { type ReactNode, useState } from "react";
 
 import appCss from "../styles.css?url";
+import { PageTransition, RouteProgress } from "../components/page-motion";
 import { Preloader, preloaderInitScript } from "../components/preloader";
+import { Cursor } from "../components/cursor";
 import { ThemeToggleButton } from "../components/spaceui/theme-toggle";
 import { WebMcp } from "../components/webmcp";
 import { SiteFooter } from "../components/site-footer";
@@ -244,12 +245,14 @@ function RootComponent() {
         <QueryClientProvider client={queryClient}>
             <MotionConfig reducedMotion="user">
                 <Preloader />
+                <RouteProgress />
+                <Cursor />
                 <WebMcp />
                 <a href="#main" className="skip-link">
                     Skip to main content
                 </a>
                 <Nav />
-                <Outlet />
+                <PageTransition />
                 <SiteFooter />
             </MotionConfig>
         </QueryClientProvider>

@@ -129,6 +129,7 @@
     html {
         font-family: var(--font-sans);
         -webkit-font-smoothing: antialiased;
+        scroll-behavior: smooth;
     }
 
     body {
@@ -171,6 +172,34 @@
 }
 .skip-link:focus {
     transform: translateY(0);
+}
+
+/* Custom cursor: hide the native pointer except in text fields. */
+body.has-cursor,
+body.has-cursor * {
+    cursor: none;
+}
+
+body.has-cursor
+    :is(
+        input,
+        textarea,
+        select,
+        [contenteditable=""],
+        [contenteditable="true"],
+        [contenteditable="plaintext-only"]
+    ),
+body.has-cursor
+    :is(
+        input,
+        textarea,
+        select,
+        [contenteditable=""],
+        [contenteditable="true"],
+        [contenteditable="plaintext-only"]
+    )
+    * {
+    cursor: text;
 }
 
 @utility font-mono-tight {
@@ -238,10 +267,53 @@
     }
 }
 
+html[data-preloader-exit] header,
 html[data-preloader-exit] main,
 html[data-preloader-exit] footer {
     animation: preloader-page-rise 1000ms cubic-bezier(0.22, 1, 0.36, 1) 150ms
         backwards;
+}
+
+/* Reload and return visits: a shorter rise, before React hydrates. */
+@keyframes page-enter {
+    from {
+        transform: translateY(16px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html[data-preloader-skip]:not([data-page-entered]) header,
+    html[data-preloader-skip]:not([data-page-entered]) main,
+    html[data-preloader-skip]:not([data-page-entered]) footer {
+        animation: page-enter 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+}
+
+/* Sections ease in as they enter the screen. Unsupported browsers just show them. */
+@keyframes section-rise {
+    from {
+        transform: translateY(22px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .section-rise {
+            animation: section-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation-timeline: view();
+            animation-range: entry 8% cover 28%;
+        }
+    }
 }
 
 @keyframes preloader-failsafe {
@@ -256,6 +328,10 @@ html[data-preloader-skip] [data-preloader] {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
     .animate-marquee,
     .animate-marquee-vertical {
         animation-play-state: paused;
